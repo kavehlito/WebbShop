@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebbShopUppgift
+namespace WebbShop
 {
     class Program
     {
@@ -49,10 +49,10 @@ namespace WebbShopUppgift
                         SearchProduct();
                         break;
                     case 3:
-                        //visa alla produkter
+                        ShowAllProducts();
                         break;
                     case 4:
-                        //Varukorg
+                        ShowShoppingCart();
                         break;
                     case 5:
                         //Admin
@@ -118,6 +118,14 @@ namespace WebbShopUppgift
                 int.TryParse(amountInput, out amount);
                 Products.AddProductToCart(productSel, amount);
             }
+        }
+        public static void ShowAllProducts()
+        {
+            Products.AllProducts();
+        }
+        public static void ShowShoppingCart()
+        {
+            ShoppingCart.ShowCartProducts();
         }
     }
 }

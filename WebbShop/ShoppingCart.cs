@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WebbShop.Models;
+
+namespace WebbShop
+{
+    class ShoppingCart
+    {
+        public static void ShowCartProducts()
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                var prodsInCart = from cart in db.Kundvagns
+                                  join prod in db.Produkters
+                                  on cart.ProduktId equals prod.Id
+                                  select new
+                                  {
+                                      ProduktID = prod.Id,
+                                      Namn = prod.Namn,
+                                      Antal = cart.Antal,
+                                      Enhetspris = prod.EnhetsPris
+                                  };
+
+                Console.WriteLine("--------------------------");
+                Console.WriteLine("{0,-5}{1,-26}{2,-9}{3}", "ID", "Namn", "Antal", "Totalt");
+                foreach (var product in prodsInCart)
+                {
+                    Console.WriteLine($"{product.ProduktID,-4} {product.Namn,-25} {product.Antal,-8} {product.Antal * product.Enhetspris:C2}");
+                }
+                Console.WriteLine("--------------------------");
+            }
+        }
+    }
+}

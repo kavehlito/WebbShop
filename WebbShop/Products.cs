@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using WebbShop.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace WebbShopUppgift
+namespace WebbShop
 {
     class Products
     {
@@ -13,7 +11,7 @@ namespace WebbShopUppgift
             using (var db = new WebbShopKASAContext())
             {
                 var products = db.Produkters;
-                var selectionProducts = products.Where(sp => sp.Id == 3 || sp.Id == 8 || sp.Id == 16);
+                var selectionProducts = products.Where(sp => sp.Id == 3 || sp.Id == 8 || sp.Id == 14);
                 Console.WriteLine("\nUtvalda Produkter:");
                 Console.WriteLine("--------------------------");
 
@@ -66,15 +64,27 @@ namespace WebbShopUppgift
         {
             using (var db = new WebbShopKASAContext())
             {
-                int stockAmount;
-                var product = db.Produkters.Select(p => p.LagerAntal);
 
+                
+                var product = db.Produkters;
+                var prods = product.Where(p => p.Id == addSelection);
                 Kundvagn cart = new Kundvagn();
-                cart.ProduktId = addSelection;
-                cart.Antal = amount;
-                db.Kundvagns.Update(cart);
-                db.SaveChanges();
+                foreach (var prod in prods)
+                {
+                    if (amount <= prod.LagerAntal)
+                    {
+                        prod.LagerAntal = prod.LagerAntal - amount;
+                        db.Produkters.Update(prod);
+                        db.SaveChanges();
+                        cart.ProduktId = addSelection;
+                        cart.Antal = amount;
 
+                        
+                        db.Kundvagns.Update(cart);
+                        db.SaveChanges();
+                    }
+                    Console.WriteLine("Det finns inte så många produkter i lagret, vänligen välj ett mindre antal");
+                }
             }
         }
         public static void FindProduct(string product)
@@ -87,6 +97,20 @@ namespace WebbShopUppgift
                 Console.WriteLine("--------------------------");
                 Console.WriteLine("{0,-5}{1,-26}{2,-21}", "ID", "Namn", "Pris");
                 foreach (var prod in findProduct)
+                {
+                    Console.WriteLine($"{prod.Id,-4} {prod.Namn,-25} {prod.EnhetsPris,-20:C2}");
+                }
+                Console.WriteLine("--------------------------");
+            }
+        }
+        public static void AllProducts()
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                var products = db.Produkters;
+                Console.WriteLine("--------------------------");
+                Console.WriteLine("{0,-5}{1,-26}{2,-21}", "ID", "Namn", "Pris");
+                foreach (var prod in products)
                 {
                     Console.WriteLine($"{prod.Id,-4} {prod.Namn,-25} {prod.EnhetsPris,-20:C2}");
                 }

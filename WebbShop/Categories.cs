@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebbShop.Models;
 
-namespace WebbShopUppgift
+namespace WebbShop
 {
     class Categories
     {
