@@ -37,8 +37,7 @@ namespace WebbShop
         }
         public static void MenuExecution(int menuSel)
         {
-            try
-            {
+            
                 //Your code for execution based on the menu selection
                 switch (menuSel)
                 {
@@ -61,11 +60,6 @@ namespace WebbShop
                         Console.WriteLine("Bye Felicia");
                         break;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
         }
         public static void CategorySelection()
         {
@@ -126,6 +120,48 @@ namespace WebbShop
         public static void ShowShoppingCart()
         {
             ShoppingCart.ShowCartProducts();
+
+            Console.WriteLine("\nVill du gå till kassan? (Y/N)");
+            string addInput = Console.ReadLine();
+            if (addInput == "Y" || addInput == "y")
+            {
+                Console.WriteLine("Är du en ny eller befintlig kund?");
+                Console.WriteLine("1. Ny Kund");
+                Console.WriteLine("2. Befintlig Kund");
+                int input;
+                string userInput = Console.ReadLine();
+                Console.Clear();
+                int.TryParse(userInput, out input);
+                if (input == 1)
+                {
+                    Console.WriteLine("Vänligen skriv in dina kunduppgifter...");
+                    Console.WriteLine("Förnamn");
+                    string firstName = Console.ReadLine();
+                    Console.WriteLine("Efternamn");
+                    string lastName = Console.ReadLine();
+                    Console.WriteLine("Telefonnummer");
+                    int phoneNr;
+                    string numberInput = Console.ReadLine();
+                    int.TryParse(numberInput, out phoneNr);
+                    Console.WriteLine("Adress (I format \"Gatunamn Gatunummer Ort\"");
+                    string adress = Console.ReadLine();
+                    Customer.NewCustomer(firstName,lastName,phoneNr,adress);
+                    Console.Clear();
+                    Console.WriteLine($"Välkommen {firstName}!");
+                }
+                if (input == 2)
+                {
+                    Customer.CustomerList();
+                    int idInput;
+                    Console.WriteLine("Välj ditt kundId");
+                    string customerIdInput = Console.ReadLine();
+                    int.TryParse(customerIdInput, out idInput);
+                    Console.Clear();
+                    Customer.AddCustomerToCart(idInput);
+                }
+                Console.WriteLine("Välj ett Frakt alternativ");
+                Shipping.ShippingOptions();
+            }
         }
     }
 }

@@ -64,26 +64,22 @@ namespace WebbShop
         {
             using (var db = new WebbShopKASAContext())
             {
+                Produkter prod = (from p in db.Produkters
+                                 where p.Id == addSelection
+                                 select p).SingleOrDefault();
 
-                
-                var product = db.Produkters;
-                var prods = product.Where(p => p.Id == addSelection);
-                Kundvagn cart = new Kundvagn();
-                foreach (var prod in prods)
+                var stockQuantity = db.Produkters.Where(p => p.Id == addSelection).FirstOrDefault().LagerAntal;
+
+                if (stockQuantity >= amount)
                 {
-                    if (amount <= prod.LagerAntal)
-                    {
-                        prod.LagerAntal = prod.LagerAntal - amount;
-                        db.Produkters.Update(prod);
-                        db.SaveChanges();
-                        cart.ProduktId = addSelection;
-                        cart.Antal = amount;
-
-                        
-                        db.Kundvagns.Update(cart);
-                        db.SaveChanges();
-                    }
-                    Console.WriteLine("Det finns inte så många produkter i lagret, vänligen välj ett mindre antal");
+                    var newStock = stockQuantity - amount;
+                    prod.LagerAntal = newStock;
+                    Kundvagn cart = new Kundvagn();
+                    cart.ProduktId = addSelection;
+                    cart.Antal = amount;
+                   // db.Produkters.Update(prod); // ändringar ska göras efter köp
+                    db.Kundvagns.Update(cart);
+                    db.SaveChanges();
                 }
             }
         }

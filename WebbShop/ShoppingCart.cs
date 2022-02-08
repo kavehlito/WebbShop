@@ -25,13 +25,19 @@ namespace WebbShop
                                   };
 
                 Console.WriteLine("--------------------------");
-                Console.WriteLine("{0,-5}{1,-26}{2,-9}{3}", "ID", "Namn", "Antal", "Totalt");
+                Console.WriteLine("{0,-5}{1,-26}{2,-9}{3}", "ID", "Namn", "Antal", "Summa");
+                decimal totalPrice;
+                decimal endPrice = 0;
                 foreach (var product in prodsInCart)
                 {
-                    Console.WriteLine($"{product.ProduktID,-4} {product.Namn,-25} {product.Antal,-8} {product.Antal * product.Enhetspris:C2}");
+                    totalPrice = (decimal)(product.Antal * product.Enhetspris);
+                    Console.WriteLine($"{product.ProduktID,-4} {product.Namn,-25} {product.Antal,-8} {totalPrice:C2}");
+                    endPrice += totalPrice;
                 }
                 Console.WriteLine("--------------------------");
+                Console.WriteLine($"Totalsumma att betala: {endPrice:C2}\n");
             }
         }
+
     }
 }
