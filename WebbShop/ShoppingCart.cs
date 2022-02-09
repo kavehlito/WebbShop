@@ -18,7 +18,7 @@ namespace WebbShop
                                   on cart.ProduktId equals prod.Id
                                   select new
                                   {
-                                      ProduktID = prod.Id,
+                                      ProduktId = prod.Id,
                                       Namn = prod.Namn,
                                       Antal = cart.Antal,
                                       Enhetspris = prod.EnhetsPris
@@ -31,7 +31,7 @@ namespace WebbShop
                 foreach (var product in prodsInCart)
                 {
                     totalPrice = (decimal)(product.Antal * product.Enhetspris);
-                    Console.WriteLine($"{product.ProduktID,-4} {product.Namn,-25} {product.Antal,-8} {totalPrice:C2}");
+                    Console.WriteLine($"{product.ProduktId,-4} {product.Namn,-25} {product.Antal,-8} {totalPrice:C2}");
                     endPrice += totalPrice;
                 }
                 Console.WriteLine("--------------------------");

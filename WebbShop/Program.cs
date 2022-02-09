@@ -116,6 +116,23 @@ namespace WebbShop
         public static void ShowAllProducts()
         {
             Products.AllProducts();
+            int productSel;
+            Console.WriteLine("Välj en produkt via ID för att se mer information");
+            string productInput = Console.ReadLine();
+            int.TryParse(productInput, out productSel);
+            Console.Clear();
+            Products.ShowProductInformation(productSel);
+
+            Console.WriteLine("\nVill du lägga till produkten i varukorgen? (Y/N)");
+            string addInput = Console.ReadLine();
+            if (addInput == "Y" || addInput == "y")
+            {
+                int amount;
+                Console.WriteLine("\nHur många vill du lägga till?");
+                string amountInput = Console.ReadLine();
+                int.TryParse(amountInput, out amount);
+                Products.AddProductToCart(productSel, amount);
+            }
         }
         public static void ShowShoppingCart()
         {
@@ -148,6 +165,15 @@ namespace WebbShop
                     Customer.NewCustomer(firstName,lastName,phoneNr,adress);
                     Console.Clear();
                     Console.WriteLine($"Välkommen {firstName}!");
+                    Console.WriteLine("----------------------------");
+
+                    Customer.CustomerList();
+                    int idInput;
+                    Console.WriteLine("Välj ditt kundId");
+                    string customerIdInput = Console.ReadLine();
+                    int.TryParse(customerIdInput, out idInput);
+                    Orders.AddCustomer(idInput);
+                    Console.Clear();
                 }
                 if (input == 2)
                 {
@@ -159,6 +185,7 @@ namespace WebbShop
                     Orders.AddCustomer(idInput);
                     Console.Clear();
                 }
+
                 Console.WriteLine("Välj ett Frakt alternativ");
                 Shipping.ShippingOptions();
                 int shippingInpt;
@@ -167,16 +194,22 @@ namespace WebbShop
                 Orders.AddShippingOption(shippingInpt);
                 Console.Clear();
 
+                Console.WriteLine("Skriv in leverans adress (I format \"Gatunamn Gatunummer Ort\"");
+                string adressInput = Console.ReadLine();
+                Orders.AddDeliveryAddress(adressInput);
+                Console.Clear();
+
                 Console.WriteLine("Välj ett Betalsätt");
                 PaymentOptions.ShowPaymentOptions();
                 int paymentInput;
                 string payInput = Console.ReadLine();
                 int.TryParse(payInput, out paymentInput);
                 Orders.AddPaymenetOption(paymentInput);
+                Orders.AddOrderDate();
+                Orderdetails.ProductsToOrderDetails();
                 ShoppingCart.ClearCart();
 
 
-                Orders.AddOrderDate();
                 Console.Clear();
                 Console.WriteLine("Tack för ditt köp!");
             }

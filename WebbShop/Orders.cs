@@ -59,5 +59,18 @@ namespace WebbShop
                 db.SaveChanges();
             }
         }
+        public static void AddDeliveryAddress(string adressInput)
+        {
+            using(var db = new WebbShopKASAContext())
+            {
+                Order order = (from o in db.Orders
+                               where o.LeveransAdress == null
+                               select o).SingleOrDefault();
+
+                order.LeveransAdress = adressInput;
+                db.Orders.Update(order);
+                db.SaveChanges();
+            }
+        }
     }
 }

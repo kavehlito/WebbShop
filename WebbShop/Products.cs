@@ -90,6 +90,7 @@ namespace WebbShop
                 var products = db.Produkters;
                 var findProduct = products.Where(fp => fp.Namn.Contains(product));
 
+                // lägga till if does not find
                 Console.WriteLine("--------------------------");
                 Console.WriteLine("{0,-5}{1,-26}{2,-21}", "ID", "Namn", "Pris");
                 foreach (var prod in findProduct)
@@ -97,6 +98,7 @@ namespace WebbShop
                     Console.WriteLine($"{prod.Id,-4} {prod.Namn,-25} {prod.EnhetsPris,-20:C2}");
                 }
                 Console.WriteLine("--------------------------");
+                
             }
         }
         public static void AllProducts()
