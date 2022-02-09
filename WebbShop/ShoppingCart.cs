@@ -38,6 +38,18 @@ namespace WebbShop
                 Console.WriteLine($"Totalsumma att betala: {endPrice:C2}\n");
             }
         }
-
+        public static void ClearCart()
+        {
+            using(var db = new WebbShopKASAContext())
+            {
+                var clearCart = from c in db.Kundvagns
+                                select c;
+                foreach (var cart in clearCart)
+                {
+                    db.Kundvagns.Remove(cart);
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }

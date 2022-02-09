@@ -156,11 +156,29 @@ namespace WebbShop
                     Console.WriteLine("Välj ditt kundId");
                     string customerIdInput = Console.ReadLine();
                     int.TryParse(customerIdInput, out idInput);
+                    Orders.AddCustomer(idInput);
                     Console.Clear();
-                    Customer.AddCustomerToCart(idInput);
                 }
                 Console.WriteLine("Välj ett Frakt alternativ");
                 Shipping.ShippingOptions();
+                int shippingInpt;
+                string shipInput = Console.ReadLine();
+                int.TryParse(shipInput, out shippingInpt);
+                Orders.AddShippingOption(shippingInpt);
+                Console.Clear();
+
+                Console.WriteLine("Välj ett Betalsätt");
+                PaymentOptions.ShowPaymentOptions();
+                int paymentInput;
+                string payInput = Console.ReadLine();
+                int.TryParse(payInput, out paymentInput);
+                Orders.AddPaymenetOption(paymentInput);
+                ShoppingCart.ClearCart();
+
+
+                Orders.AddOrderDate();
+                Console.Clear();
+                Console.WriteLine("Tack för ditt köp!");
             }
         }
     }

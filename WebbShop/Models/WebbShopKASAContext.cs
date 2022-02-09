@@ -124,7 +124,7 @@ namespace WebbShop.Models
 
                 entity.Property(e => e.BetalsättsId).HasColumnName("BetalsättsID");
 
-                entity.Property(e => e.KundvagnId).HasColumnName("KundvagnID");
+                entity.Property(e => e.KundId).HasColumnName("KundID");
 
                 entity.Property(e => e.LeveransAdress)
                     .HasMaxLength(250)

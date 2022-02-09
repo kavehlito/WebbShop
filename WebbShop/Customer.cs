@@ -34,19 +34,5 @@ namespace WebbShop
                 db.SaveChanges();
             }
         }
-        public static void AddCustomerToCart(int customer)
-        {
-            using (var db = new WebbShopKASAContext())
-            {
-                Kundvagn cart = (from k in db.Kundvagns
-                                 where k.KundId == null
-                                 select k).FirstOrDefault();
-
-                cart.KundId = customer;
-                db.Kundvagns.Update(cart);
-                db.SaveChanges();
-
-            }
-        }
     }
 }

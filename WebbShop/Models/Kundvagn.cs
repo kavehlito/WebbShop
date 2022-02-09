@@ -8,7 +8,6 @@ namespace WebbShop.Models
     public partial class Kundvagn
     {
         public int Id { get; set; }
-        public int? KundId { get; set; }
         public int? Antal { get; set; }
         public int? ProduktId { get; set; }
     }
