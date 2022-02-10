@@ -34,7 +34,6 @@ namespace WebbShop
                     var productSupplier = prod.LeverantörId;
                     var orderId = prod.OrderId;
 
-
                     orderdetail.ProduktId = productId;
                     orderdetail.Antal = productAmount;
                     orderdetail.Enhetspris = productPrice;

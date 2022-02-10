@@ -91,6 +91,7 @@ namespace WebbShop
                 var findProduct = products.Where(fp => fp.Namn.Contains(product));
 
                 // lägga till if does not find
+
                 Console.WriteLine("--------------------------");
                 Console.WriteLine("{0,-5}{1,-26}{2,-21}", "ID", "Namn", "Pris");
                 foreach (var prod in findProduct)
