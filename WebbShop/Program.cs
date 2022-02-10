@@ -20,7 +20,7 @@ namespace WebbShop
         {
             int menuSel;
             Console.WriteLine($"\nVälj ett alternativ");
-            Console.WriteLine("Menu:");
+            Console.WriteLine("Meny:");
             Console.WriteLine("1 - Kolla igenom vårt sortiment");
             Console.WriteLine("2 - Sök bland produkter");
             Console.WriteLine("3 - Visa alla produkter");
@@ -37,29 +37,29 @@ namespace WebbShop
         }
         public static void MenuExecution(int menuSel)
         {
-            
-                //Your code for execution based on the menu selection
-                switch (menuSel)
-                {
-                    case 1:
-                        CategorySelection();
-                        break;
-                    case 2:
-                        SearchProduct();
-                        break;
-                    case 3:
-                        ShowAllProducts();
-                        break;
-                    case 4:
-                        ShowShoppingCart();
-                        break;
-                    case 5:
-                        //Admin
-                        break;
-                    case 6:
-                        Console.WriteLine("Bye Felicia");
-                        break;
-                }
+
+            //Your code for execution based on the menu selection
+            switch (menuSel)
+            {
+                case 1:
+                    CategorySelection();
+                    break;
+                case 2:
+                    SearchProduct();
+                    break;
+                case 3:
+                    ShowAllProducts();
+                    break;
+                case 4:
+                    ShowShoppingCart();
+                    break;
+                case 5:
+                    AdminMenu();
+                    break;
+                case 6:
+                    Console.WriteLine("Bye Felicia");
+                    break;
+            }
         }
         public static void CategorySelection()
         {
@@ -162,7 +162,7 @@ namespace WebbShop
                     int.TryParse(numberInput, out phoneNr);
                     Console.WriteLine("Adress (I format \"Gatunamn Gatunummer Ort\"");
                     string adress = Console.ReadLine();
-                    Customer.NewCustomer(firstName,lastName,phoneNr,adress);
+                    Customer.NewCustomer(firstName, lastName, phoneNr, adress);
                     Console.Clear();
                     Console.WriteLine($"Välkommen {firstName}!");
                     Console.WriteLine("----------------------------");
@@ -214,5 +214,240 @@ namespace WebbShop
                 Console.WriteLine("Tack för ditt köp!");
             }
         }
+        public static int AdminMenu()
+        {
+            int adminSel;
+            Console.WriteLine($"\nVälj ett alternativ");
+            Console.WriteLine("Admin Meny:");
+            Console.WriteLine("1 - Lägg till en kategori");
+            Console.WriteLine("2 - Lägg till en produkt");
+            Console.WriteLine("3 - Ta bort en kategori");
+            Console.WriteLine("4 - Ta bort en produkt");
+            Console.WriteLine("5 - Ändra produkt namn");
+            Console.WriteLine("6 - Ändra produkt info");
+            Console.WriteLine("7 - Ändra produkt pris");
+            Console.WriteLine("8 - Ändra produkt kategoryId");
+            Console.WriteLine("9 - Ändra produkt leverantörId");
+            Console.WriteLine("10 - Ändra produkt lagerantal");
+            Console.WriteLine("11 - Visa Order historik");
+            Console.WriteLine("11 - Tillbaka till menyn");
+
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out adminSel);
+
+            AdminExecution(adminSel);
+
+            //Your code for menu selection
+            Console.Clear();
+            return adminSel;
+        }
+        public static void AdminExecution(int adminSel)
+        {
+            switch (adminSel)
+            {
+                case 1:
+                    AdminAddCategory();
+                    break;
+                case 2:
+                    AdminAddProduct();
+                    break;
+                case 3:
+                    AdminRemoveCategory();
+                    break;
+                case 4:
+                    AdminRemoveProduct();
+                    break;
+                case 5:
+                    AdminChangeProductName();
+                    break;
+                case 6:
+                    AdminChangeProductInfo();
+                    break;
+                case 7:
+                    AdminChangeProductPrice();
+                    break;
+                case 8:
+                    AdminChangeProductCategoryId();
+                    break;
+                case 9:
+                    AdminChangeProductSupplierId();
+                    break;
+                case 10:
+                    AdminChangeProductUnitsInStock();
+                    break;
+                case 11:
+                    break;
+            }
+        }
+        public static void AdminAddCategory()
+        {
+            Console.WriteLine("Skriv in det nya kategorinamnet...");
+            string categoryInput = Console.ReadLine();
+            Admin.AddCategory(categoryInput);
+            Console.Clear();
+        }
+        public static void AdminAddProduct()
+        {
+            Console.WriteLine("Skriv in produktnamnet...");
+            string prodNameInput = Console.ReadLine();
+            Console.WriteLine();
+            Console.Clear();
+
+            Console.WriteLine("Skriv in kategoriId...");
+            int cateSel;
+            Categories.ShowCategories();
+            string cateIdInput = Console.ReadLine();
+            int.TryParse(cateIdInput, out cateSel);
+            Console.WriteLine();
+            Console.Clear();
+
+            Console.WriteLine("Skriv in produkt priset...");
+            double priceSel;
+            string priceInput = Console.ReadLine();
+            double.TryParse(priceInput, out priceSel);
+            Console.WriteLine();
+            Console.Clear();
+
+            Console.WriteLine("Skriv in produktinfo...");
+            string prodInfoInput = Console.ReadLine();
+            Console.WriteLine();
+
+            Console.WriteLine("Skriv in produkt leverantörsId...");
+            int supplierSel;
+            Suppliers.ShowAllSuppliers();
+            string supplierInput = Console.ReadLine();
+            int.TryParse(supplierInput, out supplierSel);
+            Console.WriteLine();
+
+            Console.WriteLine("Skriv in produkt lagerantal...");
+            int stockSel;
+            string stockInput = Console.ReadLine();
+            int.TryParse(stockInput, out stockSel);
+            Console.WriteLine();
+
+            Admin.AddProduct(prodNameInput, cateSel, priceSel, prodInfoInput, supplierSel, stockSel);
+            Console.Clear();
+        }
+        public static void AdminRemoveCategory()
+        {
+            Console.WriteLine("Välj Id för att ta bort en kategory");
+            int cateSel;
+            Categories.ShowCategories();
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out cateSel);
+            Admin.RemoveCategory(cateSel);
+            Console.Clear();
+        }
+        public static void AdminRemoveProduct()
+        {
+            Console.WriteLine("Välj Id för att ta bort produkt");
+            int prodSel;
+            Products.AllProducts();
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out prodSel);
+            Admin.RemoveProduct(prodSel);
+            Console.Clear();
+        }
+        public static void AdminChangeProductName()
+        {
+            Console.WriteLine("Välj produkt Id för att ändra namnet");
+            int prodSel;
+            Products.AllProducts();
+            string userSel = Console.ReadLine();
+            int.TryParse(userSel, out prodSel);
+            Console.Clear();
+
+            Console.WriteLine("Skriv in det nya produktnamnet...");
+            string userInput = Console.ReadLine();
+            Admin.ChangeProductName(prodSel, userInput);
+            Console.Clear();
+        }
+        public static void AdminChangeProductInfo()
+        {
+            Console.WriteLine("Välj produkt Id för att ändra produkt info");
+            int prodSel;
+            Products.AllProducts();
+            string userSel = Console.ReadLine();
+            int.TryParse(userSel, out prodSel);
+            Console.Clear();
+
+            Console.WriteLine("Skriv in det nya produkt informationen...");
+            string userInput = Console.ReadLine();
+            Admin.ChangeProductInfo(prodSel, userInput);
+            Console.Clear();
+        }
+        public static void AdminChangeProductPrice()
+        {
+            Console.WriteLine("Välj produkt Id för att ändra priset");
+            int prodSel;
+            double newPrice;
+            Products.AllProducts();
+            string userSel = Console.ReadLine();
+            int.TryParse(userSel, out prodSel);
+            Console.Clear();
+
+            Console.WriteLine("Skriv in det nya priset");
+            string userInput = Console.ReadLine();
+            double.TryParse(userInput, out newPrice);
+            Admin.ChangeProductPrice(prodSel, newPrice);
+            Console.Clear();
+        }
+        public static void AdminChangeProductCategoryId()
+        {
+            Console.WriteLine("Välj produkt Id för att ändra kategoryId");
+            int prodSel;
+            int newCateId;
+            Products.AllProducts();
+            string userSel = Console.ReadLine();
+            int.TryParse(userSel, out prodSel);
+            Console.Clear();
+
+            Console.WriteLine("Skriv in det nya kategoryId");
+            Categories.ShowCategories();
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out newCateId);
+            Admin.ChangeProductCategoryId(prodSel, newCateId);
+            Console.Clear();
+        }
+        public static void AdminChangeProductSupplierId()
+        {
+            Console.WriteLine("Välj produkt Id för att ändra leverantörId");
+            int prodSel;
+            int newsupplierId;
+            Products.AllProducts();
+            string userSel = Console.ReadLine();
+            int.TryParse(userSel, out prodSel);
+            Console.Clear();
+
+            Console.WriteLine("Skriv in det nya leverantörId");
+            Suppliers.ShowAllSuppliers();
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out newsupplierId);
+            Admin.ChangeProductSupplierId(prodSel, newsupplierId);
+            Console.Clear();
+        }
+        public static void AdminChangeProductUnitsInStock()
+        {
+            Console.WriteLine("Välj produkt Id för att ändra lagerantal");
+            int prodSel;
+            int newStock;
+            Products.AllProducts();
+            string userSel = Console.ReadLine();
+            int.TryParse(userSel, out prodSel);
+            Console.Clear();
+
+            Console.WriteLine("Skriv in det nya lagerantalet");
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out newStock);
+            Admin.ChangeProductStock(prodSel, newStock);
+            Console.Clear();
+        }
+        public static void AdminOrderHistory()
+        {
+            Console.Clear();
+            Orderdetails.ShowOrderDetails();
+            Console.WriteLine();
+        }
+
     }
 }
