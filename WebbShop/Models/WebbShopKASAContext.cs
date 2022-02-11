@@ -131,6 +131,8 @@ namespace WebbShop.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Orderdatum).HasColumnType("date");
+
+                
             });
 
             modelBuilder.Entity<Orderdetaljer>(entity =>

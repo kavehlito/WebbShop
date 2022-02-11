@@ -72,5 +72,51 @@ namespace WebbShop
                 db.SaveChanges();
             }
         }
+        public static void TotalPrice()
+        {
+            using(var db = new WebbShopKASAContext())
+            {
+                var prodsInCart = from cart in db.Kundvagns
+                                  join prod in db.Produkters
+                                  on cart.ProduktId equals prod.Id
+                                  from f in db.Frakts
+                                  from o in db.Orders
+                                  where f.Id == o.FraktId
+                                  select new
+                                  {
+                                      ProduktId = prod.Id,
+                                      Namn = prod.Namn,
+                                      Antal = cart.Antal,
+                                      Enhetspris = prod.EnhetsPris,
+                                      FraktPris = f.FraktPris
+                                  };
+
+                Order order = (from o in db.Orders
+                               where o.TotalPris == null
+                               select o).SingleOrDefault();
+
+                decimal totalPrice;
+                decimal endPrice = 0;
+                decimal fraktPrice = 0;
+                foreach (var product in prodsInCart)
+                {
+                    totalPrice = (decimal)(product.Antal * product.Enhetspris);
+                    endPrice += totalPrice;
+                }
+                foreach (var frakt in prodsInCart)
+                {
+                    fraktPrice = (decimal)frakt.FraktPris;
+                }
+                decimal priceWithShipping = endPrice + fraktPrice;
+                decimal VAT = 0.2M;
+                decimal priceVAT = priceWithShipping * VAT;
+
+                Console.WriteLine($"Totalpris med frakt = {priceWithShipping:C2}\nInklusive moms: {priceVAT:C2}");
+                order.TotalPris = (double?)priceWithShipping;
+               
+                db.Orders.Update(order);
+                db.SaveChanges();
+            }
+        }
     }
 }

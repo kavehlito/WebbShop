@@ -18,6 +18,7 @@ namespace WebbShop.Models
         public string LeveransAdress { get; set; }
         public int? BetalsättsId { get; set; }
         public int? FraktId { get; set; }
+        public double? TotalPris { get; set; }
 
         public virtual ICollection<Orderdetaljer> Orderdetaljers { get; set; }
     }

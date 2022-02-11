@@ -138,6 +138,8 @@ namespace WebbShop
         {
             ShoppingCart.ShowCartProducts();
 
+            Console.WriteLine("\n1 - Ta bort en vara");
+            Console.WriteLine("2 - Minska antalet varor");
             Console.WriteLine("\nVill du gå till kassan? (Y/N)");
             string addInput = Console.ReadLine();
             if (addInput == "Y" || addInput == "y")
@@ -201,6 +203,7 @@ namespace WebbShop
 
                 Console.WriteLine("Välj ett Betalsätt");
                 PaymentOptions.ShowPaymentOptions();
+                Orders.TotalPrice();
                 int paymentInput;
                 string payInput = Console.ReadLine();
                 int.TryParse(payInput, out paymentInput);
@@ -448,6 +451,5 @@ namespace WebbShop
             Orderdetails.ShowOrderDetails();
             Console.WriteLine();
         }
-
     }
 }
