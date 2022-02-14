@@ -8,13 +8,13 @@ namespace WebbShop
         {
             Console.WriteLine("Välkommen till Webbshoppen!\n");
             Products.ShowProductSelection();
-            int menuSel = 6;
+            int menuSel = 15;
             do
             {
                 menuSel = MenuSelection();
                 MenuExecution(menuSel);
 
-            } while (menuSel != 6);
+            } while (menuSel != 15);
         }
         public static int MenuSelection()
         {
@@ -26,7 +26,11 @@ namespace WebbShop
             Console.WriteLine("3 - Visa alla produkter");
             Console.WriteLine("4 - Varukorg");
             Console.WriteLine("5 - Admin");
-            Console.WriteLine("6 - Lämna");
+            Console.WriteLine("6 - Produkt med högst lagerantal per kategori");
+            Console.WriteLine("7 - Lagersaldo per kategori");
+            Console.WriteLine("8 - Produkter sorterade efter pris per kategori");
+
+            Console.WriteLine("15 - Lämna webbshoppen");
 
             string userInput = Console.ReadLine();
             int.TryParse(userInput, out menuSel);
@@ -57,8 +61,21 @@ namespace WebbShop
                     AdminMenu();
                     break;
                 case 6:
+                    QueryStockPerCategory();
+                    break;
+                case 7:
+                    QueryStockValuePerCategory();
+                    break;
+                case 8:
+                    QueryMostValuedProductsPerCategory();
+                    break;
+                case 15:
                     Console.WriteLine("Bye Felicia");
                     break;
+                    
+                /*case 6:
+                    Console.WriteLine("Bye Felicia");
+                    break;*/
             }
         }
         public static void CategorySelection()
@@ -140,9 +157,31 @@ namespace WebbShop
 
             Console.WriteLine("\n1 - Ta bort en vara");
             Console.WriteLine("2 - Minska antalet varor");
-            Console.WriteLine("\nVill du gå till kassan? (Y/N)");
+            Console.WriteLine("3 - Gå till Kassan");
             string addInput = Console.ReadLine();
-            if (addInput == "Y" || addInput == "y")
+            int cartOption;
+            int.TryParse(addInput, out cartOption);
+            if (cartOption == 1)
+            {
+                Console.WriteLine("Vilken vara vill du ta bort?(Ange ID)");
+                string removeInput = Console.ReadLine();
+                int removeProduct;
+                int.TryParse(removeInput, out removeProduct);
+                ShoppingCart.RemoveProductFromCart(removeProduct);
+            }
+            if (cartOption == 2)
+            {
+                Console.WriteLine("Vilken produkt vill du minska antalet av?(Ange ID)");
+                string prodinput = Console.ReadLine();
+                int prodOption;
+                int.TryParse(prodinput, out prodOption);
+                Console.WriteLine("Ange antalet du vill minska med");
+                string nrToRemove = Console.ReadLine();
+                int removeNr;
+                int.TryParse(nrToRemove, out removeNr);
+                ShoppingCart.ReduceAmountOfItemsInCart(prodOption, removeNr);
+            }
+            if (cartOption == 3)
             {
                 Console.WriteLine("Är du en ny eller befintlig kund?");
                 Console.WriteLine("1. Ny Kund");
@@ -450,6 +489,21 @@ namespace WebbShop
             Console.Clear();
             Orderdetails.ShowOrderDetails();
             Console.WriteLine();
+        }
+        public static void QueryStockPerCategory()
+        {
+            Console.WriteLine("Produkt med högst lagerantal per kategori");
+            Query.StockAmountPerCategory();
+        }
+        public static void QueryStockValuePerCategory()
+        {
+            Console.WriteLine("7 - Lagersaldo per kategori");
+            Query.StockValuePerCategory();
+        }
+        public static void QueryMostValuedProductsPerCategory()
+        {
+            Console.WriteLine("Produkter sorterade efter pris per kategori");
+            Query.MostValuedProductsPerCategory();
         }
     }
 }

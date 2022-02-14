@@ -77,7 +77,7 @@ namespace WebbShop
                     Kundvagn cart = new Kundvagn();
                     cart.ProduktId = addSelection;
                     cart.Antal = amount;
-                   // db.Produkters.Update(prod); // ändringar ska göras efter köp
+                    db.Produkters.Update(prod); // ändringar ska göras efter köp
                     db.Kundvagns.Update(cart);
                     db.SaveChanges();
                 }

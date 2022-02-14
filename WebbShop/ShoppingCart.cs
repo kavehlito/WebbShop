@@ -51,5 +51,58 @@ namespace WebbShop
                 db.SaveChanges();
             }
         }
+        public static void RemoveProductFromCart(int productSelection)
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                Kundvagn cart = (from c in db.Kundvagns
+                                 where c.ProduktId == productSelection
+                                 select c).SingleOrDefault();
+
+                Produkter prod = (from p in db.Produkters
+                                  where p.Id == productSelection
+                                  select p).SingleOrDefault();
+
+                var stockQuantity = db.Produkters.Where(p => p.Id == productSelection).SingleOrDefault().LagerAntal;
+                var cartStockRemoval = cart.Antal;
+
+                if (cart.ProduktId == productSelection)
+                {
+                    stockQuantity = stockQuantity + cartStockRemoval;
+                    prod.LagerAntal = stockQuantity;
+                    db.Produkters.Update(prod);
+                    db.Kundvagns.Remove(cart);
+                }
+                db.SaveChanges();
+            }
+        }
+        public static void ReduceAmountOfItemsInCart(int prodSelection, int amount)
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                Kundvagn cart = (from c in db.Kundvagns
+                                 where c.ProduktId == prodSelection
+                                 select c).SingleOrDefault();
+
+                var cartQuantity = db.Kundvagns.Where(k => k.ProduktId == prodSelection).SingleOrDefault().Antal;
+
+                Produkter prod = (from p in db.Produkters
+                                  where p.Id == prodSelection
+                                  select p).SingleOrDefault();
+
+                var stockQuantity = db.Produkters.Where(p => p.Id == prodSelection).SingleOrDefault().LagerAntal;
+
+                if (cartQuantity >= amount)
+                {
+                    cartQuantity = cartQuantity - amount;
+                    cart.Antal = cartQuantity;
+                    stockQuantity = stockQuantity + amount;
+                    prod.LagerAntal = stockQuantity;
+                    db.Produkters.Update(prod);
+                    db.Kundvagns.Update(cart);
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }
