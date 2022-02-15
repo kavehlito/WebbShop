@@ -29,6 +29,8 @@ namespace WebbShop
             Console.WriteLine("6 - Produkt med högst lagerantal per kategori");
             Console.WriteLine("7 - Lagersaldo per kategori");
             Console.WriteLine("8 - Produkter sorterade efter pris per kategori");
+            Console.WriteLine("9 - Antalet produkter per kategori");
+            Console.WriteLine("10 - Lagerantal per leverantör");
 
             Console.WriteLine("15 - Lämna webbshoppen");
 
@@ -68,6 +70,12 @@ namespace WebbShop
                     break;
                 case 8:
                     QueryMostValuedProductsPerCategory();
+                    break;
+                case 9:
+                    QueryPorductsPerCategory();
+                    break;
+                case 10:
+                    QueryStockAmountPerSupplier();
                     break;
                 case 15:
                     Console.WriteLine("Bye Felicia");
@@ -504,6 +512,16 @@ namespace WebbShop
         {
             Console.WriteLine("Produkter sorterade efter pris per kategori");
             Query.MostValuedProductsPerCategory();
+        }
+        public static void QueryPorductsPerCategory()
+        {
+            Console.WriteLine("Antalet produkter per kategori");
+            Query.UniqueProductsPerCategory();
+        }
+        public static void QueryStockAmountPerSupplier()
+        {
+            Console.WriteLine("Lagerantal per leverantör");
+            Query.StockAmountPerSupplier();
         }
     }
 }
