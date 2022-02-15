@@ -279,7 +279,6 @@ namespace WebbShop
             Console.WriteLine("8 - Ändra produkt kategoryId");
             Console.WriteLine("9 - Ändra produkt leverantörId");
             Console.WriteLine("10 - Ändra produkt lagerantal");
-            Console.WriteLine("11 - Visa Order historik");
             Console.WriteLine("11 - Tillbaka till menyn");
 
             string userInput = Console.ReadLine();
