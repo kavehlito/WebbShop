@@ -128,7 +128,7 @@ namespace WebbShop
                 Console.WriteLine("{0,-10}{1,-15}{2,-15}{3,-25}{4,-15}{5,15}{6}", "ID", "KundId", "OrderDatum", "LeveransAdress", "BetalsättsId", "FraktiD" , "TotalPris");
                 foreach (var order in orders)
                 {
-                    Console.WriteLine($"{order.Id,-9} {order.KundId,-14} {order.Orderdatum.ToShortDateString(),-14} {order.LeveransAdress,-24} {order.BetalsättsId,-14} {order.FraktId,-14} {order.TotalPris}");
+                    Console.WriteLine($"{order.Id,-9} {order.KundId,-14} {order.Orderdatum,-14} {order.LeveransAdress,-24} {order.BetalsättsId,-14} {order.FraktId,-14} {order.TotalPris}");
                 }
                 Console.WriteLine("--------------------------");
             }

@@ -14,7 +14,7 @@ namespace WebbShop.Models
 
         public int Id { get; set; }
         public int? KundId { get; set; }
-        public DateTime Orderdatum { get; set; }
+        public DateTime? Orderdatum { get; set; }
         public string LeveransAdress { get; set; }
         public int? BetalsättsId { get; set; }
         public int? FraktId { get; set; }

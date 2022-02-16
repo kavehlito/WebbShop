@@ -57,13 +57,13 @@ namespace WebbShop
             {
                 Kundvagn cart = (from c in db.Kundvagns
                                  where c.ProduktId == productSelection
-                                 select c).SingleOrDefault();
+                                 select c).FirstOrDefault();
 
                 Produkter prod = (from p in db.Produkters
                                   where p.Id == productSelection
-                                  select p).SingleOrDefault();
+                                  select p).FirstOrDefault();
 
-                var stockQuantity = db.Produkters.Where(p => p.Id == productSelection).SingleOrDefault().LagerAntal;
+                var stockQuantity = db.Produkters.Where(p => p.Id == productSelection).FirstOrDefault().LagerAntal;
                 var cartStockRemoval = cart.Antal;
 
                 if (cart.ProduktId == productSelection)
@@ -82,15 +82,15 @@ namespace WebbShop
             {
                 Kundvagn cart = (from c in db.Kundvagns
                                  where c.ProduktId == prodSelection
-                                 select c).SingleOrDefault();
+                                 select c).FirstOrDefault();
 
-                var cartQuantity = db.Kundvagns.Where(k => k.ProduktId == prodSelection).SingleOrDefault().Antal;
+                var cartQuantity = db.Kundvagns.Where(k => k.ProduktId == prodSelection).FirstOrDefault().Antal;
 
                 Produkter prod = (from p in db.Produkters
                                   where p.Id == prodSelection
-                                  select p).SingleOrDefault();
+                                  select p).FirstOrDefault();
 
-                var stockQuantity = db.Produkters.Where(p => p.Id == prodSelection).SingleOrDefault().LagerAntal;
+                var stockQuantity = db.Produkters.Where(p => p.Id == prodSelection).FirstOrDefault().LagerAntal;
 
                 if (cartQuantity >= amount)
                 {
