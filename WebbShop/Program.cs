@@ -264,6 +264,7 @@ namespace WebbShop
                 Console.WriteLine("Tack för ditt köp!");
             }
         }
+        
         public static int AdminMenu()
         {
             int adminSel;
@@ -279,7 +280,9 @@ namespace WebbShop
             Console.WriteLine("8 - Ändra produkt kategoryId");
             Console.WriteLine("9 - Ändra produkt leverantörId");
             Console.WriteLine("10 - Ändra produkt lagerantal");
-            Console.WriteLine("11 - Tillbaka till menyn");
+            Console.WriteLine("11 - Visa Orderdetaljer");
+            Console.WriteLine("12 - Visa Ordrar");
+            Console.WriteLine("13 - Tillbaka till menyn");
 
             string userInput = Console.ReadLine();
             int.TryParse(userInput, out adminSel);
@@ -287,7 +290,7 @@ namespace WebbShop
             AdminExecution(adminSel);
 
             //Your code for menu selection
-            Console.Clear();
+            //Console.Clear();
             return adminSel;
         }
         public static void AdminExecution(int adminSel)
@@ -325,6 +328,12 @@ namespace WebbShop
                     AdminChangeProductUnitsInStock();
                     break;
                 case 11:
+                    AdminShowOrderDetails();
+                    break;
+                case 12:
+                    AdminShowOrders();
+                    break;
+                case 13:
                     break;
             }
         }
@@ -491,11 +500,15 @@ namespace WebbShop
             Admin.ChangeProductStock(prodSel, newStock);
             Console.Clear();
         }
-        public static void AdminOrderHistory()
+        public static void AdminShowOrderDetails()
         {
-            Console.Clear();
+            Console.WriteLine("Order Detaljer");
             Orderdetails.ShowOrderDetails();
-            Console.WriteLine();
+        }
+        public static void AdminShowOrders()
+        {
+            Console.WriteLine("Order Historik");
+            Orders.ShowOrders();
         }
         public static void QueryStockPerCategory()
         {

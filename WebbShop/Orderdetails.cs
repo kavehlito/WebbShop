@@ -52,10 +52,10 @@ namespace WebbShop
                 var details = db.Orderdetaljers;
 
                 Console.WriteLine("--------------------------");
-                Console.WriteLine("{0,-5}{1,-5}{2,-5}{3,-10}{4,-5}{5}", "ID", "OrderId","ProduktId", "EnhetsPris", "Antal", "LeverantörId");
+                Console.WriteLine("{0,-10}{1,-15}{2,-15}{3,-15}{4,-15}{5}", "ID", "OrderId","ProduktId", "EnhetsPris", "Antal", "LeverantörId");
                 foreach (var detail in details)
                 {
-                    Console.WriteLine($"{detail.Id,-4} {detail.OrderId,-4} {detail.ProduktId,-4} {detail.Enhetspris,-9} {detail.Antal,-4} {detail.LeverantörId}");
+                    Console.WriteLine($"{detail.Id,-9} {detail.OrderId,-14} {detail.ProduktId,-14} {detail.Enhetspris,-14} {detail.Antal,-14} {detail.LeverantörId}");
                 }
                 Console.WriteLine("--------------------------");
             }
