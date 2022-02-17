@@ -112,7 +112,7 @@ namespace WebbShop
                     {
                         count++;
                     }
-                    Console.WriteLine($"Antalet unika produkter: {count, -10}");
+                    Console.WriteLine($"Antalet unika produkter: {count,-10}");
                 }
             }
         }
@@ -142,6 +142,65 @@ namespace WebbShop
                         stockValue = stockValue + supplierStockAmount;
                     }
                     Console.WriteLine($"{stockValue}st");
+                }
+            }
+        }
+        public static void PopularPaymentOption()
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                var popularPayment = (from c in db.Betalsätts
+                                      join o in db.Orders on c.Id equals o.BetalsättsId
+                                      select c).ToList().GroupBy(x => x.BetalningsAlternativ)
+                                     .Select(x => new
+                                     {
+                                         PaymentOption = x.FirstOrDefault().BetalningsAlternativ,
+                                         Count = x.Count()
+                                     }).OrderByDescending(x => x.Count).ToList();
+
+                foreach (var payment in popularPayment)
+                {
+                    Console.WriteLine($"\n{payment.PaymentOption} -- {payment.Count}st");
+                }
+            }
+        }
+        public static void PopularCategory()
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                var popularCategories = (from a in db.Kategoriers
+                                         join b in db.Produkters on a.Id equals b.KategoriId
+                                         join c in db.Orderdetaljers on b.Id equals c.ProduktId
+                                         select a).ToList().GroupBy(x => x.Namn)
+                                   .Select(x => new
+                                   {
+                                       CategoryName = x.FirstOrDefault().Namn,
+                                       Count = x.Count()
+                                   }).OrderByDescending(x => x.Count).ToList();
+
+                foreach (var category in popularCategories)
+                {
+                    Console.WriteLine($"\n{category.CategoryName} -- {category.Count}");
+                }
+            }
+        }
+        public static void FavoriteCustomer()
+        {
+            using (var db = new WebbShopKASAContext())
+            {
+                var customer = (from c in db.Kunds
+                                join o in db.Orders on c.Id equals o.KundId
+                                select c).ToList().GroupBy(x => x.Förnamn)
+                                     .Select(x => new
+                                     {
+                                         FirstName = x.FirstOrDefault().Förnamn,
+                                         LastName = x.FirstOrDefault().Efternamn,
+                                         Count = x.Count()
+                                     }).OrderByDescending(x => x.Count).ToList();
+
+                foreach (var payment in customer)
+                {
+                    Console.WriteLine($"\n{payment.FirstName} {payment.LastName} -- {payment.Count}st");
                 }
             }
         }

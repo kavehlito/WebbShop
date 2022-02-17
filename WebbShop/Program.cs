@@ -25,14 +25,21 @@ namespace WebbShop
             Console.WriteLine("2 - Sök bland produkter");
             Console.WriteLine("3 - Visa alla produkter");
             Console.WriteLine("4 - Varukorg");
+
+            Console.WriteLine("\n-------------Admin-----------");
             Console.WriteLine("5 - Admin");
+
+            Console.WriteLine("\n--------------Queries----------");
             Console.WriteLine("6 - Produkt med högst lagerantal per kategori");
             Console.WriteLine("7 - Lagersaldo per kategori");
             Console.WriteLine("8 - Produkter sorterade efter pris per kategori");
             Console.WriteLine("9 - Antalet produkter per kategori");
             Console.WriteLine("10 - Lagerantal per leverantör");
+            Console.WriteLine("11 - Populäraste betalningssätt");
+            Console.WriteLine("12 - Populäraste kategorier");
+            Console.WriteLine("13 - Våra favorit kunder!");
 
-            Console.WriteLine("15 - Lämna webbshoppen");
+            Console.WriteLine("\n15 - Lämna webbshoppen");
 
             string userInput = Console.ReadLine();
             int.TryParse(userInput, out menuSel);
@@ -76,6 +83,15 @@ namespace WebbShop
                     break;
                 case 10:
                     QueryStockAmountPerSupplier();
+                    break;
+                case 11:
+                    QueryPopularPaymentOptions();
+                    break;
+                case 12:
+                    QueryPopularCategories();
+                    break;
+                case 13:
+                    QueryFavoriteCustomer();
                     break;
                 case 15:
                     Console.WriteLine("Bye Felicia");
@@ -264,7 +280,6 @@ namespace WebbShop
                 Console.WriteLine("Tack för ditt köp!");
             }
         }
-        
         public static int AdminMenu()
         {
             int adminSel;
@@ -534,6 +549,21 @@ namespace WebbShop
         {
             Console.WriteLine("Lagerantal per leverantör");
             Query.StockAmountPerSupplier();
+        }
+        public static void QueryPopularPaymentOptions()
+        {
+            Console.WriteLine("Populäraste betalningssätt");
+            Query.PopularPaymentOption();
+        }
+        public static void QueryPopularCategories()
+        {
+            Console.WriteLine("Populäraste kategorier");
+            Query.PopularCategory();
+        }
+        public static void QueryFavoriteCustomer()
+        {
+            Console.WriteLine("Våra favorit kunder!");
+            Query.FavoriteCustomer();
         }
     }
 }
